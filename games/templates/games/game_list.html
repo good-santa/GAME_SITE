@@ -1,35 +1,55 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8">
-  <title>Категорії ігор</title>
-  <link rel="stylesheet" href="{% static 'games/css/style.css' %}">
-</head>
-<body>
-  <div class="container">
-    <h1>Категорії ігор</h1>
+{% extends 'games/base.html' %}
 
-    <div class="categories">
-      <div class="category" style="background-image: url('/media/covers/439636.jpg');">
+{% block title %}Каталог ігор{% endblock %}
+
+{% block content %}
+  <section class="hero" id="overview">
+    <div class="container">
+      <h1>Категорії ігор</h1>
+      <p class="hero-subtitle">Оберіть жанр та відкрийте для себе нові враження.</p>
+    </div>
+  </section>
+
+  <section class="categories" id="catalog">
+    <div class="container category-grid">
+      <article class="category-card" style="background-image: url('/media/covers/439636.jpg');">
         <h3>Наукова фантастика й кіберпанк</h3>
-      </div>
-      <div class="category" style="background-image: url('/media/covers/OIP_2.webp');">
+      </article>
+      <article class="category-card" style="background-image: url('/media/covers/OIP_2.webp');">
         <h3>Казуальні ігри</h3>
-      </div>
-      <div class="category" style="background-image: url('/media/covers/R.jpg');">
+      </article>
+      <article class="category-card" style="background-image: url('/media/covers/R.jpg');">
         <h3>Стратегії</h3>
-      </div>
-      <div class="category" style="background-image: url('/media/covers/witcher3.JPG');">
+      </article>
+      <article class="category-card" style="background-image: url('/media/covers/witcher3.JPG');">
         <h3>Симулятори</h3>
-      </div>
-      <div class="category" style="background-image: url('/media/covers/439636.jpg');">
+      </article>
+      <article class="category-card" style="background-image: url('/media/covers/439636.jpg');">
         <h3>Містобудівельні</h3>
-      </div>
-      <div class="category" style="background-image: url('/media/covers/OIP_2.webp');">
+      </article>
+      <article class="category-card" style="background-image: url('/media/covers/OIP_2.webp');">
         <h3>Продукти з VR</h3>
+      </article>
+    </div>
+  </section>
+
+  <section class="all-games" id="all-games">
+    <div class="container">
+      <h2>Усі ігри</h2>
+      <div class="game-grid">
+        {% for game in games|slice:":5" %}
+          <div class="game-card">
+            <img src="{{ game.cover.url }}" alt="{{ game.title }}" class="game-cover">
+            <div class="game-info">
+              <h3>{{ game.title }}</h3>
+              <p class="price">{{ game.price }} ₴</p>
+              <a class="btn" href="{% url 'game_detail' game.pk %}">Переглянути</a>
+            </div>
+          </div>
+        {% empty %}
+          <p class="empty-message">Наразі ігор немає.</p>
+        {% endfor %}
       </div>
     </div>
-  </div>
-</body>
-</html>
+  </section>
+{% endblock %}
