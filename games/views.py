@@ -2,8 +2,18 @@ from django.shortcuts import render, get_object_or_404
 from .models import Game
 
 def game_list(request):
+    query = request.GET.get('q', '').strip()
+
     games = Game.objects.all()
-    return render(request, 'games/game_list.html', {'games': games})
+    if query:
+        games = games.filter(title__icontains=query)
+
+    context = {
+        'games': games,
+        'query': query,
+    }
+
+    return render(request, 'games/game_list.html', context)
 
 
 def game_detail(request, pk):

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Game Store{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'games/css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrapper container">
+      <a href="{% url 'game_list' %}" class="logo">Q</a>
+      <nav class="main-nav">
+        <a href="#overview">Огляд</a>
+        <a href="#catalog">Каталог</a>
+        <a href="#all-games">Усі ігри</a>
+      </nav>
+      <form class="search-bar" method="get" action="{% url 'game_list' %}">
+        <input type="text" name="q" placeholder="Пошук гри" value="{{ query|default:'' }}">
+        <button type="submit">Q</button>
+      </form>
+    </div>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
