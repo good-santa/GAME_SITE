@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ game.title }}</title>
+  <link rel="stylesheet" href="{% static 'games/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← Назад</a>
+
+    <div class="game-detail">
+      <div class="gallery">
+        <img src="{{ game.cover.url }}" class="main-img">
+        {% if game.screenshot %}
+        <img src="{{ game.screenshot.url }}" class="second-img">
+        {% endif %}
+      </div>
+
+      <div class="details">
+        <h1>{{ game.title }}</h1>
+        <p class="genre">Жанр: {{ game.genre }}</p>
+        <p class="desc">{{ game.description }}</p>
+        <p class="price">{{ game.price }} ₴</p>
+        <button class="buy">Купити</button>
+      </div>
+    </div>
+
+    <h2>Рекомендовані ігри</h2>
+    <div class="recommend">
+      {% for rec in recommended %}
+      <a href="{% url 'game_detail' rec.pk %}" class="rec-card">
+        <img src="{{ rec.cover.url }}">
+        <p>{{ rec.title }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
